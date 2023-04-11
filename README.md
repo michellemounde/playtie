@@ -1,4 +1,4 @@
-# Project Title
+# Playlist Shift
 - Image and short bio of project
 - OR Demo GIF and bio
 
@@ -106,6 +106,8 @@ If you wish to contribute or if there's anything you would like to chat about, s
 ## How to Contribute
 
 The contributing guidelines can be found at [How to Contribute](docs/CONTRIBUTING.md).
+
+EDIT CONTRIBUTING.md
 
 ## Tests
 
