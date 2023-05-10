@@ -24,7 +24,7 @@ function App() {
         <Switch>
        </Switch>
       )}
-      <h1>Express React Template</h1>
+      <h1>Playlist Shift</h1>
     </>
   );
 }
