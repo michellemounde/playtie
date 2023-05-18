@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
+import { ChakraProvider } from '@chakra-ui/react';
+
 import App from './App';
 import { ModalProvider, Modal } from './context/Modal';
 
@@ -22,14 +24,16 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root() {
   return (
-    <ModalProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-          <Modal />
-        </BrowserRouter>
-      </Provider>
-    </ModalProvider>
+    <ChakraProvider>
+      <ModalProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+            <Modal />
+          </BrowserRouter>
+        </Provider>
+      </ModalProvider>
+    </ChakraProvider>
   );
 }
 

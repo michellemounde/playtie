@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 import Navigation from './components/Navigation';
+import Home from './components/Home';
 
 import * as sessionActions from './store/session';
 
@@ -20,11 +21,10 @@ function App() {
   return isLoaded && (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-       </Switch>
-      )}
       <h1>Playlist Shift</h1>
+      <Switch>
+        <Route path="/" exact component={Home}></Route>
+      </Switch>
     </>
   );
 }
