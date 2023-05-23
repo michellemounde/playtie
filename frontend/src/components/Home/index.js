@@ -1,13 +1,13 @@
-import { Editable, EditableInput, EditablePreview } from '@chakra-ui/react';
+import { Input, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 
 const Home = () => {
   return (
     <main>
       <h2>Easily transfer playlists from Youtube to Spotify</h2>
-      <Editable>
-        <EditablePreview />
-        <EditableInput />
-      </Editable>
+      <InputGroup>
+        <InputLeftAddon children='https://' />
+        <Input placeholder='Paste the link of the playlist you would like to transfer...'/>
+      </InputGroup>
     </main>
   )
 }
