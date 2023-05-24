@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import sessionReducer from './session';
+import linkReducer from './links';
 
 const rootReducer = ({
-  session: sessionReducer
+  session: sessionReducer,
+  link: linkReducer
 });
 
 const preloadedState = {};
