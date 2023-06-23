@@ -12,10 +12,11 @@ const submitLink = link => {
 
 export const submit = link => async dispatch => {
   const { url } = link;
+
   const res = await csrfFetch('/api/links', {
     method: 'POST',
-      // headers will be set by csrfFetch
-      body: JSON.stringify({ url })
+    // headers will be set by csrfFetch
+    body: JSON.stringify({ url })
     });
 
   if (res.ok) {
@@ -26,14 +27,14 @@ export const submit = link => async dispatch => {
 }
 
 
-const initialState = { link: null };
+const initialState = { url: null };
 
 const linkReducer = (state = initialState, action) => {
   let nextState = Object.assign({}, state);
 
   switch(action.type) {
     case SUBMIT_LINK:
-      nextState.link = action.payload;;
+      nextState.url = action.payload;
       return nextState;
     default:
       return state;

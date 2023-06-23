@@ -10,16 +10,22 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [url, setUrl] = useState('');
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const payload = { url };
+
     return dispatch(linkActions.submit(payload))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors)
+      })
   }
 
   return (
-    <main>
+    <>
       <h2>Easily transfer playlists from Youtube to Spotify</h2>
 
       <form onSubmit={handleSubmit}>
@@ -32,13 +38,15 @@ const Home = () => {
               required
               value={url}
               onChange={(e) => setUrl(e.target.value)}/>
-            <FormErrorMessage>Link is required</FormErrorMessage>
+            {errors.link && (
+              <FormErrorMessage>Link is required.</FormErrorMessage>
+            )}
           </InputGroup>
 
         </FormControl>
-        <Button>Submit</Button>
+        <Button type='submit'>Submit</Button>
       </form>
-    </main>
+    </>
   )
 }
 
