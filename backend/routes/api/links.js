@@ -21,14 +21,17 @@ const validateUrl = [
 router.post(
   '/',
   validateUrl,
-  (req, res, next) => {
+  async (req, res, next) => {
     const { url } = req.body;
     console.log(url);
 
-    const browserInstance = startBrowser();
-    const songTitles = scraperController(browserInstance, url);
+    const browserInstance = await startBrowser();
+    const songTitles = await scraperController(browserInstance, url);
 
-    return res.json({ link: url })
+    console.log('songTitles');
+    console.log(songTitles);
+
+    return res.json({ songs: songTitles })
   }
 )
 

@@ -7,7 +7,7 @@ async function startBrowser() {
   try {
     console.log('Opening the browser...');
     browser = await puppeteer.launch({
-      headless: false,
+      headless: process.env.NODE_ENV === 'production',
       args: ["--disable-setuid-sandbox"],
       'ignoreHTTPSErrors': true
     })
@@ -33,6 +33,7 @@ const pageScraper = {
       return songs;
     })
     console.log(titles);
+    return titles;
   }
 }
 
@@ -43,7 +44,8 @@ async function scraperController(browserInstance, url) {
   try {
     browser = await browserInstance;
     pageScraper.url = url;
-    await pageScraper.scraper(browser);
+    titles = await pageScraper.scraper(browser);
+    return titles;
   } catch (err) {
     console.warn('Could not resolve the browser instance => : ', err)
   }
