@@ -32,7 +32,6 @@ const pageScraper = {
       songs = songs.map(el => el.querySelector('h3 > a').title)
       return songs;
     })
-    console.log(titles);
     return titles;
   }
 }
