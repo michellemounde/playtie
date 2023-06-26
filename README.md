@@ -64,7 +64,8 @@ Credits:
 		Animations (https://alvarotrigo.com/blog/)
 		Menu (https://www.cssscript.com/expanding-dropdown-menu/)
 
-If you followed tutorials, include links to those here as well.
+	Tutorial:
+		Country geolocation (https://www.techighness.com/post/get-user-country-and-region-on-browser-with-javascript-only/)
 
 ## Technologies
 - JavaScript
