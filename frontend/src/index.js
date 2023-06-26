@@ -11,7 +11,7 @@ import { ModalProvider, Modal } from './context/Modal';
 import store from './store';
 import { restoreCsrf, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
-import * as linkActions from './store/links';
+import * as songActions from './store/songs';
 
 import './index.css';
 
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
-  window.linkActions = linkActions;
+  window.songActions = songActions;
 }
 
 function Root() {
