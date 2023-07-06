@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import sessionReducer from './session';
-import songReducer from './songs';
+import playlistReducer from './playlist';
+import authReducer from './auth';
+import spotifyReducer from './spotify';
 
 const rootReducer = ({
   session: sessionReducer,
-  song: songReducer
+  playlist: playlistReducer,
+  auth: authReducer,
+  spotify: spotifyReducer
 });
 
 const preloadedState = {};

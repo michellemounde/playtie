@@ -1,78 +1,67 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-import * as songActions from '../../store/songs';
+import * as playlistActions from '../../store/playlist';
+import * as authActions from '../../store/auth';
 
-import { Input, InputGroup, InputLeftAddon, FormControl, FormErrorMessage, Button, Spinner } from '@chakra-ui/react';
+import { Input, InputGroup, InputLeftAddon, FormControl, FormErrorMessage, Button} from '@chakra-ui/react';
 
-const { spotifyToken } = require('../../utils/spotify-api-token');
-const { timezoneCityCountry } = require('../../utils/timezone-city-country');
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   const [url, setUrl] = useState('');
-  const songTitles = useSelector(state => state.songTitles);
-  const songs = useSelector(state => state.songs);
   const [errors, setErrors] = useState({});
 
-  let currentPlatform, targetPlatform;
+  const youtube = useSelector(state => state.playlist.youtube);
+  const spotify = useSelector(state => state.playlist.spotify);
 
-  if (url) {
-    if (url.includes('www.youtube.com')) {
-    currentPlatform = 'Youtube';
-    targetPlatform = 'Spotify';
+  const { code, state, error } = useParams();
+
+  useEffect(() => {
+    if (error) {
+      setErrors(Object.assign(errors, {authError: error}));
     } else {
-      currentPlatform = 'Spotify';
-      targetPlatform = 'Youtube';
+      const payload = { code, state };
+      dispatch(authActions.getAccessToken(payload))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(Object.assign(errors, data.errors));
+        })
     }
+  }, [code, state, error])
+
+  const authenticate = async() => {
+    dispatch(authActions.getUserAuth())
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(Object.assign(errors, data.errors));
+      })
   }
 
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log('Timezone', userTimezone)
-  const region = userTimezone.split('/')
-  const userCity = region[region.length - 1];
-  console.log('userCity', userCity)
-  const userCountry = timezoneCityCountry[userCity];
-  console.log('userCountry', userCountry)
-
-  // useEffect(() => {
-  //   // Find song titles in target platform
-  //   if (targetPlatform === 'Spotify') {
-  //     songLinks = songTitles.forEach(async songTitle => {
-  //       await fetch(`https://api.spotify.com/v1/search?q=${songTitle}&type=track&market=${userCountry}limit=10`,{
-  //         method: 'GET',
-  //         headers: {
-  //           'Authorization': `${spotifyToken}`
-  //         }
-  //       })
-  //     })
-  //   } else {
-
-  //   }
-  // }, [songTitles])
-
-  const handleSubmit = (e) => {
+  const handleTransfer = (e) => {
     e.preventDefault();
 
     const payload = { url };
 
-    return dispatch(songActions.currentSongTitles(payload))
+    dispatch(playlistActions.getYoutubePlaylist(payload))
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors)
+        if (data && data.errors) setErrors(Object.assign(errors, data.errors));
       })
   }
 
-
-
-
   return (
     <>
-      <h2>Easily transfer playlists between Youtube and Spotify</h2>
+      <h2>Transfer playlists from Youtube to Spotify</h2>
 
-      <form onSubmit={handleSubmit}>
+      <section>
+        <p>Click the button below to login to Spotify</p>
+        <Button type='button' onClick={authenticate}>Log in to Spotify</Button>
+      </section>
+
+      <form onSubmit={handleTransfer}>
         <FormControl isRequired>
           <InputGroup>
             <InputLeftAddon children='Link:' />
@@ -82,45 +71,29 @@ const Home = () => {
               required
               value={url}
               onChange={(e) => setUrl(e.target.value)}/>
-            {errors.link && (
-              <FormErrorMessage>Link is required.</FormErrorMessage>
-            )}
           </InputGroup>
-
+          {errors.url && (<FormErrorMessage>{errors.url}</FormErrorMessage>)}
         </FormControl>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit' onClick={handleTransfer}>Transfer</Button>
       </form>
 
       {url && (
         <section>
-          <section id='current-platform'>
-            <h3>{`${currentPlatform}`} Playlist</h3>
-            <h4>Current songs</h4>
-            <ol>
-              <li></li>
-            </ol>
-          </section>
-
-          {songTitles && (<Spinner />)}
-
-          {songs && (
-            <section id='target-platform'>
-              <h3>{`${targetPlatform}`} Playlist</h3>
-              <h4>Songs found</h4>
-              <ol>
-                <li> </li>
-              </ol>
-              <h4>Songs not found</h4>
-              <p>The following songs could not be found on {`${targetPlatform}`}:</p>
-              <ol>
-                <li></li>
-              </ol>
-
-              <section>
-                <h4>Transfer Playlist</h4>
-                <p>Click the button below to login and transfer the found songs to a {`${targetPlatform}`} playlist</p>
-                <Button type='button'>Transfer</Button>
+          {youtube && (
+              <section id='youtube-playlist'>
+                <h3>{`Youtube Playlist - ${youtube.name}`}</h3>
+                <ol>
+                  {youtube.songs.map((title, idx) => <li key={idx}>{title}</li>)}
+                </ol>
               </section>
+          )}
+
+          {spotify && (
+            <section id='spotify-playlist'>
+              <h3>Songs for Spotify Playlist</h3>
+              <ol>
+                {spotify.songs.map((title, idx) => <li key={idx}>${title}</li>)}
+              </ol>
             </section>
           )}
         </section>

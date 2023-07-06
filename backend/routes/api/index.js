@@ -1,7 +1,11 @@
 const router = require('express').Router();
+
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
-const songsRouter = require('./songs.js');
+const authRouter = require('./auth.js');
+const playlistRouter = require('./playlist.js');
+const spotifyRouter = require('./spotify.js');
+
 const { restoreUser } = require('../../utils/auth.js');
 
 // Connect restoreUser middleware to the API router
@@ -13,6 +17,10 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
-router.use('/songs', songsRouter);
+router.use('/auth', authRouter);
+
+router.use('/playlist', playlistRouter);
+
+router.use('/spotify', spotifyRouter);
 
 module.exports = router;
