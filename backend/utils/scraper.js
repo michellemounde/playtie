@@ -20,19 +20,25 @@ async function startBrowser() {
 
 // Page Scraper
 const pageScraper = {
-  //url: 'http://books.toscrape.com',
   async scraper(browser) {
     let page = await browser.newPage();
-    console.log(`Navigating to ${this.url}...`);
-    await page.goto(this.url)
+
+    await page.goto(this.url);
+
     // Wait for the required DOM to be rendered
-    await page.waitForSelector('ytd-section-list-renderer');
-    // Get the list of song titles
-    let titles = await page.$$eval('.ytd-playlist-video-list-renderer > ytd-playlist-video-renderer', songs => {
+    const header = await page.waitForSelector('div.immersive-header-content');
+    const list = await page.waitForSelector('ytd-section-list-renderer');
+
+    // Get playlist name and songs
+    const name = await header.$eval('yt-formatted-string', title => title.textContent);
+    const songs = await list.$$eval('.ytd-playlist-video-list-renderer > ytd-playlist-video-renderer', songs => {
       songs = songs.map(el => el.querySelector('h3 > a').title)
       return songs;
     })
-    return titles;
+
+    await browser.close();
+
+    return { name, songs };
   }
 }
 
@@ -43,8 +49,8 @@ async function scraperController(browserInstance, url) {
   try {
     browser = await browserInstance;
     pageScraper.url = url;
-    titles = await pageScraper.scraper(browser);
-    return titles;
+    playlist = await pageScraper.scraper(browser);
+    return playlist;
   } catch (err) {
     console.warn('Could not resolve the browser instance => : ', err)
   }
