@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import * as playlistActions from '../../store/playlist';
 import * as authActions from '../../store/auth';
 
-import { Input, InputGroup, InputLeftAddon, FormControl, FormErrorMessage, Button} from '@chakra-ui/react';
+import './Home.css';
 
 
 const Home = () => {
@@ -54,28 +54,22 @@ const Home = () => {
 
   return (
     <>
-      <h2>Transfer playlists from Youtube to Spotify</h2>
+      <section className='banner'>
+        <h2>Transfer playlists from Youtube to Spotify</h2>
 
-      <section>
-        <p>Click the button below to login to Spotify</p>
-        <Button type='button' onClick={authenticate}>Log in to Spotify</Button>
-      </section>
-
-      <form onSubmit={handleTransfer}>
-        <FormControl isRequired>
-          <InputGroup>
-            <InputLeftAddon children='Link:' />
-            <Input
+        <form onSubmit={handleTransfer}>
+          {errors.url && (<p>{errors.url}</p>)}
+            <input
               type='url'
               placeholder='Paste the link of the playlist you would like to transfer...'
               required
               value={url}
-              onChange={(e) => setUrl(e.target.value)}/>
-          </InputGroup>
-          {errors.url && (<FormErrorMessage>{errors.url}</FormErrorMessage>)}
-        </FormControl>
-        <Button type='submit' onClick={handleTransfer}>Transfer</Button>
-      </form>
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          <button type='submit' onClick={handleTransfer}>Transfer</button>
+        </form>
+      </section>
+
 
       {url && (
         <section>
@@ -88,6 +82,9 @@ const Home = () => {
               </section>
           )}
 
+          <section>
+            <button type='button' onClick={authenticate}>Log in to Spotify</button>
+          </section>
           {spotify && (
             <section id='spotify-playlist'>
               <h3>Songs for Spotify Playlist</h3>

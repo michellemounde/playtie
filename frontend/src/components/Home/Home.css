@@ -1,0 +1,7 @@
+.banner {
+  @apply bg-teal-300
+}
+
+form {
+  @apply flex flex-wrap flex-col content-center
+}
