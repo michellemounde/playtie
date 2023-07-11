@@ -25,7 +25,7 @@ const { doubleCsrfProtection } =
   doubleCsrf({
     // The only required option is getSecret, the rest have sensible defaults (shown below) other than cookieOptions edited as per AAO
     getSecret: (req) => req.secret,
-    cookieName: isProduction && '__Host-playlist-shift.X-CSRF-Token' || 'Playlist-Shift.X-CSRF-Token', // The name of the cookie to be used, recommend using `__Host-` prefix.
+    cookieName: isProduction && '__Host-playtie.X-CSRF-Token' || 'PlayTie.X-CSRF-Token', // The name of the cookie to be used, recommend using `__Host-` prefix.
     cookieOptions: {
       httpOnly: true,
       sameSite: isProduction && 'Strict', // Recommend you make this strict if possible

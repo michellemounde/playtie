@@ -1,4 +1,4 @@
-# Playlist Shift
+# PlayTie
 - Image and short bio of project
 - OR Demo GIF and bio
 

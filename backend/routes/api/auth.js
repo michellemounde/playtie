@@ -6,7 +6,7 @@ const router = express.Router();
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const url =  process.env.NODE_ENV === 'production' ? 'https://playlist-shift.onrender.com' : 'http://localhost:3000';
+const url =  process.env.NODE_ENV === 'production' ? 'https://playtie.onrender.com' : 'http://localhost:3000';
 const redirectUri = url;
 const stateKey = 'spotify_auth_state';
 

@@ -1,5 +1,5 @@
 {
-  "name": "playlist-shift",
+  "name": "playtie",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/michellemounde/playlist-shift.git"
+    "url": "git+https://github.com/michellemounde/playtie.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/michellemounde/playlist-shift/issues"
+    "url": "https://github.com/michellemounde/playtie/issues"
   },
-  "homepage": "https://github.com/michellemounde/playlist-shift#readme"
+  "homepage": "https://github.com/michellemounde/playtie#readme"
 }

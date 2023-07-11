@@ -21,7 +21,7 @@ function App() {
   return isLoaded && (
     <>
       <Navigation isLoaded={isLoaded} />
-      <h1>Playlist Shift</h1>
+      <h1>PlayTie</h1>
       <Switch>
         <Route path="/" exact component={Home}></Route>
       </Switch>
