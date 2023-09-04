@@ -2,13 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import sessionReducer from './session';
 import playlistReducer from './playlist';
-import authReducer from './auth';
 import spotifyReducer from './spotify';
 
 const rootReducer = ({
   session: sessionReducer,
   playlist: playlistReducer,
-  auth: authReducer,
   spotify: spotifyReducer
 });
 

@@ -10,7 +10,6 @@ import store from './store';
 import { restoreCsrf, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import * as playlistActions from './store/playlist';
-import * as authActions from './store/auth';
 import * as spotifyActions from './store/spotify';
 
 import './index.css';
@@ -22,7 +21,6 @@ if (process.env.NODE_ENV !== 'production') {
   window.store = store;
   window.sessionActions = sessionActions;
   window.playlistActions = playlistActions;
-  window.authActions = authActions;
   window.spotifyActions = spotifyActions;
 }
 
