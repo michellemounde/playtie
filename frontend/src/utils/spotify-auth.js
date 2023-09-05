@@ -77,18 +77,17 @@ const requestAccessToken = async (code) => {
       return response.json();
     })
     .then(data => {
-      debugger
-      // TODO check data
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('refresh_token', data.refresh_token)
+      localStorage.setItem('expires_in', data.expires_in)
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error(error);
     });
 }
 
 
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refresh_token');
 
   const body = new URLSearchParams({
@@ -109,9 +108,9 @@ const refreshAccessToken = async () => {
       return response.json();
     })
     .then(data => {
-      debugger
-      // TODO check if there is a refesh token sent back here but I don't think so
       localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('refresh_token', data.refresh_token)
+      localStorage.setItem('expires_in', data.expires_in)
     })
     .catch(error => {
       console.error('Error:', error);
@@ -121,6 +120,5 @@ const refreshAccessToken = async () => {
 
 module.exports = {
   authenticate,
-  requestAccessToken,
-  refreshAccessToken
+  requestAccessToken
 };
