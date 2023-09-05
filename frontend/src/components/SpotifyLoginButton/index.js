@@ -6,10 +6,10 @@ import { authenticate, requestAccessToken, refreshAccessToken } from "../../util
 
 import "./SpotifyLoginButton.css";
 
-const SpotifyLoginButton = ({ code, error}) => {
+const SpotifyLoginButton = ({ authCode, loginError}) => {
   const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState("");
 
   const userProfile = useSelector(state => state.spotify.userProfile)
 
@@ -23,17 +23,17 @@ const SpotifyLoginButton = ({ code, error}) => {
         clearInterval(interval);
       };
     } else {
-      if (code) {
-        requestAccessToken(code)
+      if (authCode) {
+        requestAccessToken(authCode)
           .then(() => getProfile())
       } else {
-        setErrors(prevErrors => [...prevErrors, error])
+        setError(loginError)
       }
     }
 
 
 
-  }, [userProfile, code, error])
+  }, [userProfile, authCode, loginError])
 
   const getProfile = async () => {
     const accessToken = localStorage.getItem("access_token")
@@ -46,14 +46,7 @@ const SpotifyLoginButton = ({ code, error}) => {
 
   return (
     <>
-      {errors && errors.map(error => {
-          return (
-            <ul>
-              <li key={error.id}>{error}</li>
-            </ul>
-          )
-        })
-      }
+      {error && <p>Unable to Login to Spotify due to the following error: {error}</p>}
 
       {!userProfile
         ?
