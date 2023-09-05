@@ -16,9 +16,7 @@ export const getUserProfile = (accessToken) => async dispatch => {
 
   if (res.ok) {
     const data = await res.json();
-    // TODO make sure we are accessing the userProfile correctly before setting it
-    debugger
-    dispatch(setUserProfile(data.userProfile));
+    dispatch(setUserProfile(data));
     return res;
   }
 }
