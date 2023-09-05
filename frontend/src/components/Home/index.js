@@ -16,10 +16,6 @@ const Home = () => {
   const youtube = useSelector(state => state.playlist.youtube);
   const spotify = useSelector(state => state.playlist.spotify);
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const authCode = urlParams.get('code');
-  const loginError = urlParams.get('error')
-
   const handleTransfer = (e) => {
     e.preventDefault();
 
@@ -37,7 +33,7 @@ const Home = () => {
       <section className='banner'>
         <h2>Transfer playlists from Youtube to Spotify</h2>
 
-        <SpotifyLoginButton authCode={authCode} loginError={loginError}/>
+        <SpotifyLoginButton />
 
         <form onSubmit={handleTransfer}>
           {errors.url && (<p>{errors.url}</p>)}

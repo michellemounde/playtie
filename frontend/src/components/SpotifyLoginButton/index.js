@@ -6,18 +6,23 @@ import { authenticate, requestAccessToken, refreshAccessToken } from "../../util
 
 import "./SpotifyLoginButton.css";
 
-const SpotifyLoginButton = ({ authCode, loginError}) => {
+const SpotifyLoginButton = () => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState("");
 
-  const userProfile = useSelector(state => state.spotify.userProfile)
+  const userProfile = useSelector(state => state.spotify.userProfile);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const authCode = urlParams.get('code');
+  const loginError = urlParams.get('error')
 
   useEffect(() => {
     if (userProfile) {
+      const expiry = localStorage.getItem('expires_in');
       const interval = setInterval(() =>{
         refreshAccessToken()
-      }, 60 * 60 * 1000)
+      }, expiry * 1000)
 
       return () => {
         clearInterval(interval);
@@ -27,13 +32,10 @@ const SpotifyLoginButton = ({ authCode, loginError}) => {
         requestAccessToken(authCode)
           .then(() => getProfile())
       } else {
-        setError(loginError)
+        setError(loginError);
       }
     }
-
-
-
-  }, [userProfile, authCode, loginError])
+  }, [userProfile, authCode, loginError, urlParams])
 
   const getProfile = async () => {
     const accessToken = localStorage.getItem("access_token")
@@ -43,6 +45,8 @@ const SpotifyLoginButton = ({ authCode, loginError}) => {
   const handleLogin = async () => {
     await authenticate();
   }
+
+  // TODO add spotify logout button in case user wants to log in to another account in the same session
 
   return (
     <>
