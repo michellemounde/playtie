@@ -29,7 +29,7 @@ const generateCodeChallenge = async (codeVerifier) => {
 }
 
 
-const authenticate = async() => {
+export const authenticate = async() => {
   const codeVerifier = generateRandomString(128);
 
   generateCodeChallenge(codeVerifier)
@@ -54,7 +54,7 @@ const authenticate = async() => {
 }
 
 
-const requestAccessToken = async (code) => {
+export const requestAccessToken = async (code) => {
   const codeVerifier = localStorage.getItem('code_verifier');
 
   const body = new URLSearchParams({
@@ -116,9 +116,3 @@ export const refreshAccessToken = async () => {
       console.error('Error:', error);
     });
 }
-
-
-module.exports = {
-  authenticate,
-  requestAccessToken
-};
