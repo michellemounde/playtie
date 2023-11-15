@@ -300,5 +300,5 @@ cython_debug/
 #.idea/
 
 
-# Misc
+# Design files
 design/
