@@ -13,8 +13,8 @@ const validateUrl = [
     .notEmpty()
     .isURL({ allow_underscores: true, host_whitelist: whitelist })
     .withMessage('Please provide a Youtube link.'),
-  handleValidationErrors
-]
+  handleValidationErrors,
+];
 
 // Get Youtube playlist details
 // POST /
@@ -28,9 +28,8 @@ router.post(
     const browserInstance = await startBrowser();
     const playlist = await scraperController(browserInstance, url);
 
-    return res.json({ playlist })
-  }
-)
-
+    return res.json({ playlist });
+  },
+);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import * as sessionActions from '../../store/session';
@@ -6,7 +6,7 @@ import { useModal } from '../../context/Modal';
 
 import './LoginForm.css';
 
-const LoginFormModal = () => {
+function LoginFormModal() {
   const dispatch = useDispatch();
 
   const [credential, setCredential] = useState('');
@@ -20,47 +20,49 @@ const LoginFormModal = () => {
 
     const payload = {
       credential,
-      password
-    }
+      password,
+    };
 
     return dispatch(sessionActions.login(payload))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors)
-      })
-  }
+        if (data && data.errors) setErrors(data.errors);
+      });
+  };
 
   return (
     <>
       <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         {errors.credential && <p>{errors.credential}</p>}
-        <label>
+        <label htmlFor="credential">
           Username or Email
           <input
-            type='text'
-            placeholder='Enter username or email'
+            id="credential"
+            type="text"
+            placeholder="Enter username or email"
             required
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
           />
         </label>
-        <label>
+        <label htmlFor="login-password">
           Password
           <input
-            type='text'
-            placeholder='Enter password'
+            id="login-password"
+            type="text"
+            placeholder="Enter password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button type='submit'>Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </>
 
-  )
+  );
 }
 
 export default LoginFormModal;

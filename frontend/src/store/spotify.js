@@ -1,17 +1,15 @@
 const SET_USER_PROFILE = 'spotify/setUserProfile';
 
-const setUserProfile = userProfile => {
-  return {
-    type: SET_USER_PROFILE,
-    payload: userProfile
-  }
-}
+const setUserProfile = (userProfile) => ({
+  type: SET_USER_PROFILE,
+  payload: userProfile,
+});
 
-export const getUserProfile = (accessToken) => async dispatch => {
+export const getUserProfile = (accessToken) => async (dispatch) => {
   const res = await fetch('https://api.spotify.com/v1/me', {
     headers: {
-      Authorization: 'Bearer ' + accessToken
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   if (res.ok) {
@@ -19,20 +17,20 @@ export const getUserProfile = (accessToken) => async dispatch => {
     dispatch(setUserProfile(data));
     return res;
   }
-}
+};
 
 const initialState = {};
 
 const spotifyReducer = (state = initialState, action) => {
-  let nextState = Object.assign({}, state);
+  const nextState = { ...state };
 
-  switch(action.type) {
+  switch (action.type) {
     case SET_USER_PROFILE:
       nextState.userProfile = action.payload;
       return nextState;
     default:
       return state;
   }
-}
+};
 
 export default spotifyReducer;

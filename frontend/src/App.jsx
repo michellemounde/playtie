@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       <h1>PlayTie</h1>
       <Switch>
-        <Route path="/" exact component={Home}></Route>
+        <Route path="/" exact component={Home} />
       </Switch>
     </>
   );

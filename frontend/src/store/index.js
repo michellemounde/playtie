@@ -7,7 +7,7 @@ import spotifyReducer from './spotify';
 const rootReducer = ({
   session: sessionReducer,
   playlist: playlistReducer,
-  spotify: spotifyReducer
+  spotify: spotifyReducer,
 });
 
 const preloadedState = {};
@@ -17,12 +17,11 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     if (process.env.NODE_ENV !== 'production') {
       const logger = require('redux-logger').default;
-      return getDefaultMiddleware().concat(logger)
-    } else {
-      return getDefaultMiddleware();
+      return getDefaultMiddleware().concat(logger);
     }
+    return getDefaultMiddleware();
   },
-  preloadedState
-})
+  preloadedState,
+});
 
 export default store;

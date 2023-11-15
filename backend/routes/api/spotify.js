@@ -1,5 +1,6 @@
 const express = require('express');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
+const fetch = (...args) => import('node-fetch').then(({ default: targetFetch }) => targetFetch(...args));
 
 const router = express.Router();
 
@@ -13,12 +14,11 @@ router.get('/user', (req, res, next) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken
-    }
+      'Authorization': `Bearer ${accessToken}`,
+    },
   })
-    .then(res => res.json())
-    .then(data => console.log(data))
-})
-
+    .then((resp) => resp.json())
+    .then((data) => console.log(data));
+});
 
 module.exports = router;

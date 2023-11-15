@@ -8,11 +8,11 @@ async function startBrowser() {
     console.log('Opening the browser...');
     browser = await puppeteer.launch({
       headless: process.env.NODE_ENV === 'production',
-      args: ["--disable-setuid-sandbox"],
-      'ignoreHTTPSErrors': true
-    })
+      args: ['--disable-setuid-sandbox'],
+      ignoreHTTPSErrors: true,
+    });
   } catch (err) {
-    console.warn('Could not create a browser instance => : ', err)
+    console.warn('Could not create a browser instance => : ', err);
   }
 
   return browser;
@@ -21,7 +21,7 @@ async function startBrowser() {
 // Page Scraper
 const pageScraper = {
   async scraper(browser) {
-    let page = await browser.newPage();
+    const page = await browser.newPage();
 
     await page.goto(this.url);
 
@@ -30,17 +30,20 @@ const pageScraper = {
     const list = await page.waitForSelector('ytd-section-list-renderer');
 
     // Get playlist name and songs
-    const name = await header.$eval('yt-formatted-string', title => title.textContent);
-    const songs = await list.$$eval('.ytd-playlist-video-list-renderer > ytd-playlist-video-renderer', songs => {
-      songs = songs.map(el => el.querySelector('h3 > a').title)
-      return songs;
-    })
+    const name = await header.$eval('yt-formatted-string', (title) => title.textContent);
+    const songs = await list.$$eval(
+      '.ytd-playlist-video-list-renderer > ytd-playlist-video-renderer',
+      (targetSongs) => {
+        targetSongs = targetSongs.map((el) => el.querySelector('h3 > a').title);
+        return targetSongs;
+      },
+    );
 
     await browser.close();
 
     return { name, songs };
-  }
-}
+  },
+};
 
 // Scraper Controller
 async function scraperController(browserInstance, url) {
@@ -49,15 +52,15 @@ async function scraperController(browserInstance, url) {
   try {
     browser = await browserInstance;
     pageScraper.url = url;
-    playlist = await pageScraper.scraper(browser);
+    const playlist = await pageScraper.scraper(browser);
     return playlist;
   } catch (err) {
-    console.warn('Could not resolve the browser instance => : ', err)
+    console.warn('Could not resolve the browser instance => : ', err);
   }
 }
 
 // Initialize scraping
 module.exports = {
   startBrowser,
-  scraperController
-}
+  scraperController,
+};
