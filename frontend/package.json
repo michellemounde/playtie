@@ -23,8 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .jsx,.js",
-    "lint:fix": "eslint . --fix --ext .jsx,.js"
+    "lint": "eslint . --config .eslintrc.dev.js --ext .jsx,.js",
+    "lint:fix": "eslint . --fix --config .eslintrc.dev.js --ext .jsx,.js"
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "eslint": "^8.52.0",
+    "eslint": "^8.54.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.33.2",
     "redux-logger": "^3.0.6",

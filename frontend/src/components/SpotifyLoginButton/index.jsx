@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as spotifyActions from '../../store/spotify';
@@ -13,14 +13,14 @@ function SpotifyLoginButton() {
 
   const userProfile = useSelector((state) => state.spotify.userProfile);
 
-  const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = useMemo(() => new URLSearchParams(window.location.search), []);
   const authCode = urlParams.get('code');
   const loginError = urlParams.get('error');
 
-  const getProfile = async () => {
+  const getProfile = useCallback(async () => {
     const accessToken = localStorage.getItem('access_token');
     dispatch(spotifyActions.getUserProfile(accessToken));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (userProfile) {
@@ -39,7 +39,7 @@ function SpotifyLoginButton() {
     } else {
       setError(loginError);
     }
-  }, [userProfile, authCode, loginError, urlParams]);
+  }, [userProfile, authCode, loginError, urlParams, getProfile]);
 
   const handleLogin = async () => {
     await authenticate();

@@ -30,11 +30,13 @@ export const getYoutubePlaylist = (link) => async (dispatch) => {
 };
 
 export const createSpotifyPlaylist = (songs) => async (dispatch) => {
-  // TODO Convert to Promise.all() because it's several songs
-  spotifySongs = songs.map(async (song) => {
+  // TODO Fix this to work - Promise.all() because it's several songs
+  const spotifySongs = songs.map(async (song) => {
     await csrfFetch(`Spotify song search api here`);
     // Get song and add it to playlist
   });
+
+  const res = Promise.all(spotifySongs);
 
   if (res.ok) {
     const data = await res.json();

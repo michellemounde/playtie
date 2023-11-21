@@ -10,8 +10,8 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "lint": "eslint . --ext .jsx,.js",
-    "lint:fix": "eslint . --fix --ext .jsx,.js"
+    "lint": "eslint . --config .eslintrc.dev.js --ext .jsx,.js",
+    "lint:fix": "eslint . --fix --config .eslintrc.dev.js --ext .jsx,.js"
   },
   "keywords": [],
   "author": "",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.22",
     "sqlite3": "^5.1.6"
