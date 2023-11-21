@@ -90,7 +90,7 @@ function SignupFormModal() {
 
         {errors.email && <p>{errors.email}</p>}
         <label htmlFor="email">
-          Email
+            Email
           <input
             id="email"
             type="text"
